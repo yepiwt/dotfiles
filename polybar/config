@@ -1,7 +1,7 @@
 ;====================================================
 ;
-  To learn more about how to configure Polybar
-  go to https://github.com/jaagr/polybar
+;  To learn more about how to configure Polybar
+;  go to https://github.com/jaagr/polybar
 ;
 ;   The README contains alot of information
 ;
@@ -19,7 +19,8 @@ alert = #FF0000
 [bar/example]
 monitor = ${env:MONITOR:}
 width = 100%
-height = 22
+;height = 22
+height = 35
 radius = 0.0
 ;offset-x = 1%
 ;offset-y = 1%
@@ -33,7 +34,7 @@ background = ${colors.background-alt}
 ; Individual values can be defined using:
 ;   {overline,underline}-size
 ;   {overline,underline}-color
-line-size = 1
+line-size = 3
 line-color = #dfdfdf
 
 ;border-size = 5
@@ -55,11 +56,12 @@ module-margin-right = 0
 ;font-2 = FontAwesome5Free:style=Solid:pixelsize=10
 ;font-2 = FontAwesome5Brands:style=Solid:pixelsize=10
 
-font-0 = Hack:pixelsize=9;3
-font-2 = "Wuncon Siji:pixelsize=10;3"
-font-1 = Weather Icons:style=Regular:size=10;2
-font-3 = FontAwesome5Free:style=Solid:pixelsize=10;3
-font-4 = FontAwesome5Brands:style=Solid:pixelsize=10;3
+font-0 = Hack:pixelsize=20;5
+font-2 = Weather Icons:size=12;0
+font-1 = Weather Icons:style=Regular:size=20;3
+font-3 = FontAwesome5Free:style=Solid:pixelsize=20;4
+font-4 = FontAwesome5Brands:style=Solid:pixelsize=16;4
+font-5 = FontAwesome 5 Free:size=10:style=Solid;3
 
 ;separator = " "
 enable-ipc = true
@@ -71,9 +73,10 @@ scroll-down = i3wm-wsprev
 ;########################################
 [bar/mybar]
 fixed-center = true
-modules-left = i3 sp2 
+modules-left = i3 sp2 local_ip sp2 ssid  
 modules-center = date
-modules-right = spotify sp2 volume
+modules-right = powermenu sp2 newbattery sp2 volume
+
 
 [module/sp2]
 type = custom/text
@@ -92,8 +95,35 @@ enable-scroll = true
 
 label-mode = %mode%
 label-mode-padding = 1
-label-mode-foreground = ${colors.foreground-alt}
-label-mode-background = ${colors.background-alt}
+;label-mode-foreground = ${colors.foreground-alt}
+;label-mode-background = ${colors.background-alt}
+
+label-focused = %index%
+label-focused-foreground = ${colors.foreground}
+label-focused-background = ${colors.background}
+label-focused-underline = ${colors.foreground-alt}
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-padding = ${self.label-focused-padding}
+;label-unfocused-foreground = ${colors.foreground-alt}
+;label-unfocused-background = ${colors.background-alt}
+
+label-visible = %index%
+;label-visible-foreground = ${self.label-focused-background}
+;label-visible-background = ${self.label-focused-foreground}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+label-urgent = %index%
+;label-urgent-foreground = ${colors.foreground}
+;label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-separator =
+label-separator-padding = 0
+;label-separator-foreground = #FFF
+
 
 [module/date]
 type = internal/date
@@ -119,5 +149,22 @@ type = internal/alsa
 type = custom/script
 exec = $HOME/soft/polybar/weather-openmap.sh
 interval = 600
-label-font = 1
+label-font = 2
 ;label = %{T1} %output% %{T-}
+
+[module/local_ip]
+type = custom/script
+exec = ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'
+interval = 1
+
+[module/newbattery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+label-font = 6
+
+label-full = %percentage%
+
+[module/ssid]
+type = custom/script
+exec = ~/soft/ssid.sh
