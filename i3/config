@@ -15,16 +15,16 @@ font pango:Hack 9
 
 exec --no-startup-id nm-applet
 
-
 for_window [class="^.*"] border pixel 1
 new_window 1pixel
+
 
 # Use pactl to adjust volume in PulseAudio.
 #set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id playerctl next spotiy &
 bindsym XF86AudioLowerVolume exec --no-startup-id playerctl previous spotify &
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle &
-bindsym XF86Mail exec --no-startup-id playerctl play-pause spotify
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle &
+bindsym XF86AudioMute exec --no-startup-id playerctl play-pause spotify
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -40,6 +40,9 @@ bindsym $mod+d exec --no-startup-id ~/soft/passmenu
 
 bindsym ctrl+space exec --no-startup-id rofi -show run
 bindsym ctrl+q kill
+
+#lockscreen
+bindsym $mod+shift+x exec betterlockscreen -l dim
 
 # change focus
 bindsym $mod+j focus left
@@ -164,26 +167,36 @@ bindsym $mod+Alt+Shift+l exec /home/vsky/soft/i3/i3lock.sh
 ###################################################
 ##################### SOFT ########################
 
-bindsym --release Print exec /home/vsky/soft/screenshoter.sh
-
+bindsym --release Print exec ~/soft/screenshoter.sh
+bindsym XF86MonBrightnessDown exec brightnessctl s 10-%
+bindsym XF86MonBrightnessUp exec brightnessctl s +10%
 
 ###################################################
 ###################################################
 ################## Workspaces #####################
 
-exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/soft/i3/workspace-1.json'"
-
+for_window [title="Calculator"] floating enable
+#exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/soft/i3/workspace-1.json'"
+for_window [class="Firefox"] move to workspace $ws1
+for_window [class="Telegram"] move to workspace $ws3
+for_window [class="Spotify"] move to workspace $ws7
+for_window [class="Discord"] move to workspace $ws9
 
 ##################################################
 ###################################################
 ################### Autoload ######################
 
-exec_always --no-startup-id /home/vsky/.config/polybar/launch.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always setxkbmap -option grp:caps_toggle "us,ru" -option grp_led:caps
+bindsym $mod+Shift+p exec --no-startup-id gnome-calculator
+
 
 #exec pa-applet
 #exec nm-applet
-exec telegram-desktop
-exec firefox
+exec --no-startup-id telegram-desktop
+exec --no-startup-id firefox
+exec --no-startup-id spotify
+exec --no-startup-id discord
 
-exec_always xautolock -time 4 -locker "~/soft/i3/i3lock.sh" &
+exec --no-startup-id xautolock -detectsleep -time 15 -locker 'systemctl suspend'
+#exec_always xautolock -time 4 -locker "~/soft/i3/i3lock.sh" &
