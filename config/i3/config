@@ -11,7 +11,8 @@
 
 set $mod Mod4
 
-font pango:Hack 9
+#font pango:Hack 9
+font pango: Hack 9
 
 exec --no-startup-id nm-applet
 
@@ -42,7 +43,7 @@ bindsym ctrl+space exec --no-startup-id rofi -show run
 bindsym ctrl+q kill
 
 #lockscreen
-bindsym $mod+shift+x exec betterlockscreen -l dim
+#bindsym $mod+shift+x exec betterlockscreen -l dim
 
 # change focus
 bindsym $mod+j focus left
@@ -80,7 +81,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+ctrl+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -160,7 +161,7 @@ client.placeholder #000000 #000000 #ffffff #000000 #000000
 client.background #ffffff
 
 
-bindsym $mod+Alt+Shift+l exec /home/vsky/soft/i3/i3lock.sh
+bindsym $mod+shift+x exec /home/vsky/soft/i3/i3lock.sh
 
 
 ###################################################
@@ -170,6 +171,7 @@ bindsym $mod+Alt+Shift+l exec /home/vsky/soft/i3/i3lock.sh
 bindsym --release Print exec ~/soft/screenshoter.sh
 bindsym XF86MonBrightnessDown exec brightnessctl s 10-%
 bindsym XF86MonBrightnessUp exec brightnessctl s +10%
+bindsym $mod+e exec nautilus
 
 ###################################################
 ###################################################
@@ -181,6 +183,7 @@ for_window [class="Firefox"] move to workspace $ws1
 for_window [class="Telegram"] move to workspace $ws3
 for_window [class="Spotify"] move to workspace $ws7
 for_window [class="Discord"] move to workspace $ws9
+for_window [class="Nautilus"] floating enable
 
 ##################################################
 ###################################################
@@ -198,5 +201,11 @@ exec --no-startup-id firefox
 exec --no-startup-id spotify
 exec --no-startup-id discord
 
-exec --no-startup-id xautolock -detectsleep -time 15 -locker 'systemctl suspend'
+#exec_always --no-startup-id xautolock -time 5  -locker "i3lock -i ~/wallpapers  && sleep 1"-killtime 10 -killer "systemctl suspend"  -detectsleep 
+
+#exec --no-startup-id xautolock -time 5 -locker 'i3lock -i ~/wallpapers' &
+
+#i3lock -c 000000 && systemctl suspend
+
+#exec --no-startup-id xautolock -detectsleep -time 15 -locker 'systemctl suspend'
 #exec_always xautolock -time 4 -locker "~/soft/i3/i3lock.sh" &
