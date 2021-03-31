@@ -45,6 +45,9 @@ bindsym ctrl+q kill
 #lockscreen
 #bindsym $mod+shift+x exec betterlockscreen -l dim
 
+#nmtui
+bindsym $mod+shift+n exec --no-startup-id xterm -e nmtui
+
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -178,6 +181,7 @@ bindsym $mod+e exec nautilus
 ################## Workspaces #####################
 
 for_window [title="Calculator"] floating enable
+for_window [title="nmtui"] floating enable
 #exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/soft/i3/workspace-1.json'"
 for_window [class="Firefox"] move to workspace $ws1
 for_window [class="Telegram"] move to workspace $ws3
@@ -197,10 +201,10 @@ bindsym $mod+Shift+p exec --no-startup-id gnome-calculator
 #exec pa-applet
 #exec nm-applet
 exec --no-startup-id telegram-desktop
-exec --no-startup-id firefox
-exec --no-startup-id spotify
-exec --no-startup-id discord
-
+#exec --no-startup-id firefox
+#exec --no-startup-id spotify
+#exec --no-startup-id discord
+exec --no-startup-id "dunst"
 #exec_always --no-startup-id xautolock -time 5  -locker "i3lock -i ~/wallpapers  && sleep 1"-killtime 10 -killer "systemctl suspend"  -detectsleep 
 
 #exec --no-startup-id xautolock -time 5 -locker 'i3lock -i ~/wallpapers' &
